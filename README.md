@@ -9,3 +9,5 @@ The following quiz application includes:
 *  Timer to see how fast you can complete the quiz.
 
 When the quiz is over you can see your overal score on the 5 question quiz! 
+
+[Deployed URL](https://karolo1998.github.io/coding-quiz/) [Github](https://github.com/KarolO1998/coding-quiz)
