@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--making document responsive but also scaling items to screen-->
+    <meta name="viewpoint" content="width-device-width, initial-scale-1.0" />
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    <title>Coding Quiz</title>
+  </head>
+  <body>
+    <!--this is a wraper-->
+    <div class="quiz-wrapper">
+      <!--quiz content-->
+      <div id="questionBox" class="question">Questions</div>
+      <div class="options">
+        <ul id="ul1">
+          <li id="opt1" onclick="button(this)"></li>
+          <li id="opt2" onclick="button(this)"></li>
+          <li id="opt3" onclick="button(this)"></li>
+          <li id="opt4" onclick="button(this)"></li>
+        </ul>
+      </div>
+      <div class="time">
+        <p>See how fast you can get done!</p>
+        <p id="fast">0</p>
+        <button id="timeO" onclick="start()">Start Time</button>
+        <button id="timeO" onclick="stop()">Stop Time</button>
+      </div>
+      <br></br>
+      <div class="score">
+        <div class="next">
+          <button id="btnNext" type="button" onclick="next()">Next</button>
+        </div>
+        <div class="score-card">SCORE: <span id="scoreCard">0</span></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var canClick = true;
+    var ul = document.getElementById("ul");
+    var nextButton = document.getElementById("btnNext");
+    var quizbox = document.getElementById("questionBox");
+    var app = {
+      questions: [
+        {
+          q: "What is computer coding?",
+          options: [
+            "Telling a computer what to do",
+            "A TV Show",
+            "A Radio Show",
+            "List of Functions",
+          ],
+          answer: 1,
+        },
+        {
+          q:
+            "What is the most important CSS property used for controling the layout",
+          options: ["Table", "Div", "Display", "Margin"],
+          answer: 3,
+        },
+        {
+          q: "How many types of windows does python use?",
+          options: ["One", "Four", "Five", "Two"],
+          answer: 4,
+        },
+        {
+          q:
+            "What is the object called that lets you work with both dates and time-related data?",
+          options: ["Syntax", "JSON", "HTML", "Font"],
+          answer: 2,
+        },
+        {
+          q:
+            "What is the format called that is used for storing and transporting data?",
+          options: ["Table", "Div", "Display", "Margin"],
+          answer: 3,
+        },
+      ],
+      index: 0,
+      load: function () {
+        canClick = true;
+        if (this.index <= this.questions.length - 1) {
+          quizbox.innerHTML =
+            this.index + 1 + ". " + this.questions[this.index].q;
+          for (let i = 0; i < 4; i++) {
+            let option = document.getElementById(`opt${i + 1}`);
+            option.innerHTML = this.questions[this.index].options[i];
+            option.className = "";
+            option.removeAttribute("disabled");
+          }
+        } else {
+          quizbox.innerHTML = "Quiz Completed!";
+          ul.style.display = "none";
+          nextButton.style.display = "none";
+        }
+      },
+      next: function () {
+        this.index++;
+        this.load();
+      },
+      check: function (ele) {
+        canClick = false;
+
+        var id = ele.id.split("");
+        if (id[id.length - 1] == this.questions[this.index].answer) {
+          this.score++;
+          ele.className = "correct";
+          this.scoreCard();
+        } else {
+          ele.className = "wrong";
+        }
+      },
+      score: 0,
+      scoreCard: function () {
+        scoreCard.innerHTML = this.questions.length + "/" + this.score;
+      },
+    };
+    function changeValue() {
+      document.getElementById("fast").innerHTML = ++value;
+    }
+
+    var timerInterval = null;
+    function start() {
+      stop(); // stoping the previous counting (if any)
+      value = 0;
+      timerInterval = setInterval(changeValue, 1000);
+    }
+    var stop = function () {
+      clearInterval(timerInterval);
+    };
+
+    window.load = app.load();
+    function button(ele) {
+      if (canClick) {
+        app.check(ele);
+      }
+    }
+    function next() {
+      app.next();
+    }
+  </script>
+</html>
